@@ -88,64 +88,74 @@ let countdown = setInterval(function(){
 // ================= REGISTRATION FORM =================
 
 
-let registerForm = document.getElementById("registerForm");
 
+const registerForm = document.getElementById("registerForm");
 
-if(registerForm){
+if (registerForm) {
+    registerForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
 
+        const registration = {
+            name: document.getElementById("name").value.trim(),
+            email: document.getElementById("email").value.trim(),
+            phone: document.getElementById("phone").value.trim(),
+            college: document.getElementById("college").value.trim(),
+            branch: document.getElementById("branch").value.trim(),
+            year: document.getElementById("year").value,
+            event: document.getElementById("event").value
+        };
 
-registerForm.addEventListener("submit",function(e){
+        if (Object.values(registration).some(value => !value)) {
+            alert("Please fill all the fields.");
+            return;
+        }
 
+        const submitButton = registerForm.querySelector(
+            'button[type="submit"]'
+        );
 
-    e.preventDefault();
+        submitButton.disabled = true;
+        submitButton.textContent = "Registering...";
 
+        try {
+            const response = await fetch(
+                "http://127.0.0.1:8000/api/register/",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(registration)
+                }
+            );
 
+            const result = await response.json();
 
-    let name = document.getElementById("name").value;
+            if (!response.ok) {
+                throw new Error(
+                    result.message || "Registration failed."
+                );
+            }
 
-    let email = document.getElementById("email").value;
+            alert(result.message);
+            registerForm.reset();
 
-    let phone = document.getElementById("phone").value;
+        } catch (error) {
+            console.error("Registration error:", error);
 
-    let college = document.getElementById("college").value;
+            alert(
+                error.message === "Failed to fetch"
+                    ? "Cannot connect to Django. Check that the backend server is running."
+                    : error.message
+            );
 
-    let branch = document.getElementById("branch").value;
-
-    let year = document.getElementById("year").value;
-
-    let event = document.getElementById("event").value;
-
-
-
-    if(
-        name=="" ||
-        email=="" ||
-        phone=="" ||
-        college=="" ||
-        branch=="" ||
-        year=="" ||
-        event==""
-    )
-    {
-
-        alert("Please fill all the fields.");
-
-    }
-
-    else
-    {
-
-        alert("Registration Successful!");
-
-        registerForm.reset();
-
-    }
-
-
-});
-
-
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = "Register";
+        }
+    });
 }
+
 
 
 
