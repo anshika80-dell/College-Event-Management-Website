@@ -18,7 +18,7 @@
 <li><a href="index.html">Home</a></li>
 <li><a href="about.html">About</a></li>
 <li><a href="events.html">Events</a></li>
-<li><a href="schedule.html">Schedule</a></li>
+<li><a href="schedule.html" area-current="page">Schedule</a></li>
 <li><a href="registration.html">Register</a></li>
 <li><a href="gallery.html">Gallery</a></li>
 <li><a href="contact.html">Contact</a></li>
@@ -27,12 +27,12 @@
 </nav>
 </header>
 
-<section class="schedule">
+<section class="schedule" id="techfest-schedule">
 
 <h1>Event Schedule</h1>
 
 <table>
-
+    <caption>TechFest 2026 Daily Event Timetable</caption>
 <tr>
 <th>Time</th>
 <th>Event</th>
@@ -90,6 +90,16 @@
 <p>© 2026 TechFest | College Event Management Website</p>
 
 </footer>
+<script>
+    const scheduleTable = document.querySelector(
+        '#techfest-schedule table'
+    );
 
+    // Count table rows excluding the header row
+    const totalEvents = scheduleTable.querySelectorAll('tr').length - 1;
+
+    // Display the result in the browser console
+    console.log("Total scheduled events:", totalEvents);
+</script>
 </body>
 </html>
