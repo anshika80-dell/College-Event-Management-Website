@@ -24,7 +24,7 @@
 <li><a href="events.html">Events</a></li>
 <li><a href="schedule.html">Schedule</a></li>
 <li><a href="registration.html">Register</a></li>
-<li><a href="gallery.html">Gallery</a></li>
+<li><a href="gallery.html" area-current="page">Gallery</a></li>
 <li><a href="contact.html">Contact</a></li>
 
 </ul>
@@ -33,7 +33,7 @@
 
 </header>
 
-<section class="gallery">
+<section class="gallery" id="techfest-gallery">
 
     <h1>Gallery</h1>
 
@@ -51,10 +51,18 @@
 </section>
 
 <footer>
-
+ 
 <p>© 2026 TechFest | College Event Management Website</p>
 
 </footer>
+    <script>
+    // Display the total number of gallery images in the browser console
+    const galleryImages = document.querySelectorAll(
+        '#techfest-gallery .gallery-container img'
+    );
+
+    console.log("Total gallery images:", galleryImages.length);
+</script>
 
 </body>
 </html>
